@@ -16,7 +16,7 @@ local function RegisterComics()
         issue = "Issue 1", -- This is the issue number of the comic, you can call it however you want, but it is recommended to leave the format "Issue 1", "Issue 2", etc..
         author = "Your name here", -- This is the author, explicit.
         icon = "comics/test/issue1/0.jpg", -- This is the icon of the weapon that will be used, it is recommended to leave it at the first one, being the cover.
-        pages = BuildPages("comics/test/issue1", 3) -- This controls how many pages there is in the issue (+ the 0 one), simply change the last number to the last page name you have (so for example if the last is 25.png, then put 25)
+        pages = BuildPages("comics/test/issue1", 3) -- This controls WHERE and HOW many pages there is in the issue (+ the 0 one), simply change the last number to the last page name you have (so for example if the last is 25.png, then put 25)
 
         -- Add other comics/issues here using the same AddComic(".. base.
     })
