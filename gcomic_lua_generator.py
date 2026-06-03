@@ -20,6 +20,8 @@ def main():
     series_title = os.path.basename(root)
     entries = []
 
+    manga_val = "true" if input("Is the comic a manga? (right-to-left reading)\nYes/No: ").strip().lower() in ("yes", "y") else "false"
+    
     for issue_dir in os.listdir(root):
         issue_path = os.path.join(root, issue_dir)
         if not os.path.isdir(issue_path): continue
@@ -28,7 +30,7 @@ def main():
         swep_id = f"comic_{clean_id(series_title)}_{clean_id(issue_dir)}"
         lua_path = f"comics/{series_title.lower()}/{issue_dir.lower()}"
         
-        entry = f'    AddComic("{swep_id}", {{\n        title = "{series_title}",\n        issue = "{issue_dir}",\n        author = "{author}",\n        icon = "{lua_path}/0.jpg",\n        pages = BuildPages("{lua_path}", {max_p})\n    }})'
+        entry = f'    AddComic("{swep_id}", {{\n        title = "{series_title}",\n        issue = "{issue_dir}",\n        author = "{author}",\n        icon = "{lua_path}/0.jpg",\n        pages = BuildPages("{lua_path}", {max_p}),\n        manga = {manga_val}\n    }})'
         entries.append(entry)
 
     script = 'COMICS_DATABASE = COMICS_DATABASE or {}\n\nlocal function RegisterComics()\n    if not BuildPages then\n        hook.Add("Initialize", "RegisterComics_Retry_" .. debug.getinfo(1, "S").short_src, RegisterComics)\n        return\n    end\n    local function AddComic(id, data)\n        COMICS_DATABASE[id] = data\n    end\n\n' + "\n\n".join(entries) + '\nend\nRegisterComics()'
